@@ -34,11 +34,24 @@ def openregistration():
     emailid = Label(registration, text="Email ID: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=150)
     password = Label(registration, text="Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=200)
     cpassword = Label(registration, text="Confirm Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=250)
+    sex = Label(registration, text="Sex: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=300)
 
     user_Ent = Entry(registration, width=30, bd=3).place(x=250, y=100)
     emailid_Ent = Entry(registration, width=30, bd=3).place(x=250, y=150)
     password_Ent = Entry(registration, show='*', width=30, bd=3).place(x=250, y=200)
     cpassword_Ent = Entry(registration, show='*', width=30, bd=3).place(x=250, y=250)
+
+    var = IntVar()
+
+    radio1 = Radiobutton(registration, text="Male ", variable=var, value=0, command=lambda:print(var.get())).place(x=250, y=300)
+    radio2 = Radiobutton(registration, text="Female ", variable=var, value=1, command=lambda:print(var.get())).place(x=300, y=300)
+    radio3 = Radiobutton(registration, text="Other ", variable=var, value=2, command=lambda:print(var.get())).place(x=370, y=300)
+
+    submit = Button(registration, text="Submit", bg='#3B247D', fg='white', font=('Impact', 15), bd=3, width=17)
+    submit.place(x=50, y=400)
+
+    cancel = Button(registration, text="Cancel", bg='#3B247D', fg='white', font=('Impact', 15), bd=3, width=17)
+    cancel.place(x=270, y=400)
 
 
 label1 = Label(win, text="DEDUPE APPLICATION", fg="blue", font=('Impact', 25, 'bold'))
