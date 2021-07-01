@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk
+import csv
+import os
 
 win = tk.Tk()
 
@@ -16,6 +18,15 @@ def submit():
     str2 = "Your Password is: "
     print(str1 + ent1.get())
     print(str2 + ent2.get())
+
+    with open('users.csv') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        for line in csv_reader:
+            if username.get() == line['email_id'] and password.get() == line['password']:
+                print('Access Approved!')
+
+            else:
+                print('Wrong Combination of Email and Password.')
 
 
 def cancel():
@@ -35,7 +46,7 @@ class Registration:
         self.emailid = Label(self.registration, text="Email ID: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=150)
         self.password = Label(self.registration, text="Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=200)
         self.cpassword = Label(self.registration, text="Confirm Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=250)
-        self.sex = Label(self.registration, text="Sex: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=300)
+        self.sex = Label(self.registration, text="Gender: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=300)
 
         self.varuser = StringVar()
         self.user_Ent = Entry(self.registration, width=30, bd=3, bg='lightgray', textvariable=self.varuser).place(x=250, y=100)
@@ -58,32 +69,50 @@ class Registration:
         self.submit = Button(self.registration, text="Submit", bg='#3B247D', fg='white', font=('Impact', 15), bd=3, width=17, command=self.reg_submit)
         self.submit.place(x=50, y=400)
 
-        self.cancel = Button(self.registration, text="Cancel", bg='#3B247D', fg='white', font=('Impact', 15), bd=3, width=17)
+        self.cancel = Button(self.registration, text="Cancel", bg='#3B247D', fg='white', font=('Impact', 15), bd=3, width=17, command=self.reg_cancel)
         self.cancel.place(x=270, y=400)
 
 
     def reg_submit(self):
-        print(self.varuser.get())
-        print(self.varemail.get())
-        print(self.varpass.get())
-        print(self.varcpass.get())
-        print(self.var.get())
+        if os.path.isfile('users.csv'):
+            print("File Already Exists!")
+
+        else:
+            with open("users.csv", 'a') as csv_file:
+                csv_writer = csv.DictWriter(csv_file, fieldnames=['user_name', 'email_id', 'password', 'gender'], delimiter=",", lineterminator='\n')
+                csv_writer.writeheader()
+
+            csv_file.close()
+
+        with open('users.csv', 'a') as csv_file:
+            csv_writer = csv.DictWriter(csv_file, fieldnames=['user_name', 'email_id', 'password', 'gender'], delimiter=',', lineterminator='\n')
+            csv_writer.writerow({'user_name':self.varuser.get(), 'email_id':self.varemail.get(), 'password':self.varpass.get(), 'gender':self.var.get()})
+
+        csv_file.close()
+
+
+    def reg_cancel(self):
+        self.varuser.set('')
+        self.varemail.set('')
+        self.varpass.set('')
+        self.varcpass.set('')
+        self.var.set(0)
 
 label1 = Label(win, text="DEDUPE APPLICATION", fg="blue", font=('Impact', 25, 'bold'))
 label1.pack()
 label2 = Label(win, text="LOGIN PAGE", fg="blue", font=('Impact', 20, 'bold'))
 label2.pack()
-User = Label(win, text="USERNAME: ", bg='white', fg="red", font=('Goudy old style', 10))
+User = Label(win, text="EMAIL: ", bg='white', fg="red", font=('Goudy old style', 10))
 User.place(x=190, y=170)
 Pass = Label(win, text="PASSWORD: ", bg='white', fg="red", font=('Goudy old style', 10))
 Pass.place(x=190, y=220)
 
 username = StringVar()
-ent1 = Entry(win, width=30, bd=3)
+ent1 = Entry(win, width=35, bd=3, textvariable=username)
 ent1.place(x=300, y=170)
 
 password = StringVar()
-ent2 = Entry(win, show='*', width=30, bd=3)
+ent2 = Entry(win, show='*', width=35, bd=3, textvariable=password)
 ent2.place(x=300, y=220)
 
 btn1 = Button(win, text="Submit", bg='#C70039', fg='white', font=('Arial', 10), bd=3, width=17, command=submit)
