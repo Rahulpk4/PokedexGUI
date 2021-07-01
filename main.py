@@ -25,9 +25,20 @@ def cancel():
 
 def openregistration():
     registration = Toplevel(win)
-    registration.geometry("500x700")
+    registration.geometry("500x600")
     registration.resizable(False,False)
     registration.title("Registration")
+
+    Header = Label(registration, text="Registration", fg="#3B247D", font=('Impact', 25, 'bold')).pack()
+    user = Label(registration, text="User name: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=100)
+    emailid = Label(registration, text="Email ID: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=150)
+    password = Label(registration, text="Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=200)
+    cpassword = Label(registration, text="Confirm Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=250)
+
+    user_Ent = Entry(registration, width=30, bd=3).place(x=250, y=100)
+    emailid_Ent = Entry(registration, width=30, bd=3).place(x=250, y=150)
+    password_Ent = Entry(registration, show='*', width=30, bd=3).place(x=250, y=200)
+    cpassword_Ent = Entry(registration, show='*', width=30, bd=3).place(x=250, y=250)
 
 
 label1 = Label(win, text="DEDUPE APPLICATION", fg="blue", font=('Impact', 25, 'bold'))
@@ -53,7 +64,7 @@ btn1.place(x=190, y=290)
 btn2 = Button(win, text="Cancel", bg='#C70039', fg='white', font=('Arial', 10), bd=3, width=17, command=cancel)
 btn2.place(x=370, y=290)
 
-btn3 = Button(win, text="First Time? Click here to Register", fg='red', bd=0, font=('Goudy old style', 10), width=45, command=openregistration)
+btn3 = Button(win, text="First Time? Click here to Register", fg='red', bd=0, font=('Times New Roman', 10), width=45, command=openregistration)
 btn3.place(x=190, y=350)
 
 win.mainloop()
