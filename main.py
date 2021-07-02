@@ -14,10 +14,10 @@ bg_image = Label(win,image=bg).place(x=0,y=0,relwidth=1,relheight=1)
 
 
 def submit():
-    str1 = "Hello "
-    str2 = "Your Password is: "
-    print(str1 + ent1.get())
-    print(str2 + ent2.get())
+    # str1 = "Hello "
+    # str2 = "Your Password is: "
+    # print(str1 + ent1.get())
+    # print(str2 + ent2.get())
 
     with open('users.csv') as csv_file:
         csv_reader = csv.DictReader(csv_file)
@@ -42,11 +42,15 @@ class Registration:
         self.registration.title("Registration")
 
         self.Header = Label(self.registration, text="Registration", fg="#3B247D", font=('Impact', 25, 'bold')).pack()
+        self.id = Label(self.registration, text="ID : ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50,y=50)
         self.user = Label(self.registration, text="User name: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=100)
         self.emailid = Label(self.registration, text="Email ID: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=150)
         self.password = Label(self.registration, text="Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=200)
         self.cpassword = Label(self.registration, text="Confirm Password: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=250)
         self.sex = Label(self.registration, text="Gender: ", fg="#3B247D", font=('Goudy old style', 15)).place(x=50, y=300)
+
+        self.varid = StringVar()
+        self.id_Ent = Entry(self.registration, width=30, bd=3, bg='lightgray', textvariable=self.varid).place(x=250, y=50)
 
         self.varuser = StringVar()
         self.user_Ent = Entry(self.registration, width=30, bd=3, bg='lightgray', textvariable=self.varuser).place(x=250, y=100)
@@ -79,19 +83,20 @@ class Registration:
 
         else:
             with open("users.csv", 'a') as csv_file:
-                csv_writer = csv.DictWriter(csv_file, fieldnames=['user_name', 'email_id', 'password', 'gender'], delimiter=",", lineterminator='\n')
+                csv_writer = csv.DictWriter(csv_file, fieldnames=['id', 'user_name', 'email_id', 'password', 'gender'], delimiter=",", lineterminator='\n')
                 csv_writer.writeheader()
 
             csv_file.close()
 
         with open('users.csv', 'a') as csv_file:
-            csv_writer = csv.DictWriter(csv_file, fieldnames=['user_name', 'email_id', 'password', 'gender'], delimiter=',', lineterminator='\n')
-            csv_writer.writerow({'user_name':self.varuser.get(), 'email_id':self.varemail.get(), 'password':self.varpass.get(), 'gender':self.var.get()})
+            csv_writer = csv.DictWriter(csv_file, fieldnames=['id', 'user_name', 'email_id', 'password', 'gender'], delimiter=',', lineterminator='\n')
+            csv_writer.writerow({'id':self.varid.get(), 'user_name':self.varuser.get(), 'email_id':self.varemail.get(), 'password':self.varpass.get(), 'gender':self.var.get()})
 
         csv_file.close()
 
 
     def reg_cancel(self):
+        self.varid.set('')
         self.varuser.set('')
         self.varemail.set('')
         self.varpass.set('')
@@ -115,7 +120,7 @@ password = StringVar()
 ent2 = Entry(win, show='*', width=35, bd=3, textvariable=password)
 ent2.place(x=300, y=220)
 
-btn1 = Button(win, text="Submit", bg='#C70039', fg='white', font=('Arial', 10), bd=3, width=17, command=submit)
+btn1 = Button(win, text="Login", bg='#C70039', fg='white', font=('Arial', 10), bd=3, width=17, command=submit)
 btn1.place(x=190, y=290)
 
 btn2 = Button(win, text="Cancel", bg='#C70039', fg='white', font=('Arial', 10), bd=3, width=17, command=cancel)
