@@ -1,17 +1,6 @@
 from tkinter import *
 import pypokedex
-import numpy as np
 from details import *
-
-# p = pypokedex.get(name="swampert")
-#
-# print (p.moves)
-#
-# for item in range(0, len(p.moves['omega-ruby'])):
-#     print (p.moves['omega-ruby'][item])
-#
-#
-# print(np.sum(np.array(p.base_stats)))
 
 class front():
     def __init__(self, win):
@@ -39,6 +28,7 @@ class front():
         self.label.place(x=180, y=150)
 
         self.search = StringVar()
+
         self.frame_entry = Entry(self.frame, bd=3, width=24, textvariable=self.search).place(x=180, y=200)
 
         self.submit_button = Button(self.frame, text="Submit", font=("Arial", 12, 'bold'), fg='black', command=self.submit).place(x=170, y=280)
@@ -49,8 +39,15 @@ class front():
         self.label.config(text="Search "+self.clicked.get())
 
     def submit(self):
+        if self.clicked.get() == "By Dex No.":
+            p = pypokedex.get(dex=int(self.search.get()))
+
+        elif self.clicked.get() == "By Name":
+            p = pypokedex.get(name=self.search.get())
+
         top = Toplevel()
-        newobj = details(top)
+        newobj = details(top, p)
+        self.search.set('')
 
 
     def cancel(self):
