@@ -2,6 +2,10 @@ from tkinter import *
 import PIL.Image, PIL.ImageTk
 import urllib3
 from io import BytesIO
+from matplotlib.figure import Figure
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
 
 
 class details:
@@ -49,12 +53,20 @@ class details:
 
         #Pokemon Stats Screen
         self.stats_frame = Frame(self.root, bg="#F3F1F1", bd=3, relief=RIDGE)
-        self.stats_frame.place(x=550,y=100,width=600,height=200)
+        self.stats_frame.place(x=550,y=100,width=600,height=450)
         self.frame2_header = Label(self.stats_frame, text="Pokemon Stats", bg="#F3F1F1", fg="black", font=("Arial", 10, 'bold'))
         self.frame2_header.pack(padx=10, pady=10)
+        stats = np.array(self.pokemon.base_stats)
+        labs = ['HP','ATK','DEF','SPATK','SPDEF','SPD']
 
-        #Pokemon Moves Screen
-        self.moves_frame = Frame(self.root, bg="#F3F1F1", bd=3, relief=RIDGE)
-        self.moves_frame.place(x=550, y=300, width=600, height=250)
-        self.frame3_header = Label(self.moves_frame, text="Pokemon Moves", bg="#F3F1F1", fg="black", font=("Arial", 10, 'bold'))
-        self.frame3_header.pack(padx=10, pady=10)
+        fig = Figure(figsize=(40,40), dpi=90)
+        a = fig.add_subplot(111)
+        a.bar(labs,stats,width=0.4)
+        a.set_title("Base Stat Distribution")
+        a.set_xlabel("Attributes")
+        a.set_ylabel("Stat Points")
+
+        canvas = FigureCanvasTkAgg(fig,master=self.stats_frame)
+        canvas.draw()
+
+        canvas.get_tk_widget().pack(padx=40, pady=10)
