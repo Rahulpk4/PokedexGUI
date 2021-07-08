@@ -6,6 +6,7 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
+from moves import *
 
 
 class details:
@@ -50,6 +51,9 @@ class details:
         self.ability_lbl = Label(self.profile_frame, text="ABILITIES: "+('/'.join([ability[0] for ability in pokemon.abilities])).upper(), font=("Arial", 10, 'bold'))
         self.ability_lbl.pack(padx=5, pady=5)
 
+        self.moves_btn = Button(self.profile_frame, text="MOVES", font=("Arial", 10, 'bold'), command=self.moves)
+        self.moves_btn.pack(padx=5, pady=5)
+
 
         #Pokemon Stats Screen
         self.stats_frame = Frame(self.root, bg="#F3F1F1", bd=3, relief=RIDGE)
@@ -70,3 +74,8 @@ class details:
         canvas.draw()
 
         canvas.get_tk_widget().pack(padx=40, pady=10)
+
+
+    def moves(self):
+        top = Toplevel()
+        obj = moves(top,self.pokemon)
