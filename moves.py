@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 
 class moves:
-    def __init__(self, top, pokemon):
+    def __init__(self, top, pokemon, game):
         self.root = top
         self.root.geometry("800x500")
         self.root.title("Pokemon Moves")
@@ -17,12 +17,13 @@ class moves:
         self.M_Frame = Frame(self.root, bd=2, relief=RIDGE)
         self.M_Frame.place(x=10,y=100,width=740,height=370)
 
-        print(self.pokemon.moves)
-        moves = [[x for x in item]for item in self.pokemon.moves['gold-silver']]
+        print (pokemon.moves)
+
+        moves = [[x for x in item]for item in self.pokemon.moves[game]]
 
         scrollx = Scrollbar(self.M_Frame, orient=HORIZONTAL)
         scrolly = Scrollbar(self.M_Frame, orient=VERTICAL)
-        self.MovesTable = ttk.Treeview(self.M_Frame,columns=("Name","LearnMethod","Level"),xscrollcommand= scrollx.set,yscrollcommand=scrolly.set)
+        self.MovesTable = ttk.Treeview(self.M_Frame,columns=("Name","LearnMethod","Level"), xscrollcommand= scrollx.set, yscrollcommand=scrolly.set)
 
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)

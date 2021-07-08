@@ -24,7 +24,7 @@ class details:
 
         # Pokemon Profile Screen
         self.profile_frame = Frame(self.root, bg="#F3F1F1", bd=3, relief=RIDGE)
-        self.profile_frame.place(x=20,y=100,width=500,height=450)
+        self.profile_frame.place(x=20,y=100,width=500,height=480)
         self.frame1_header = Label(self.profile_frame, text="Pokemon Details", bg="#F3F1F1", fg="black", font=("Arial", 15, 'bold'))
         self.frame1_header.pack(padx=10, pady=10)
 
@@ -51,13 +51,23 @@ class details:
         self.ability_lbl = Label(self.profile_frame, text="ABILITIES: "+('/'.join([ability[0] for ability in pokemon.abilities])).upper(), font=("Arial", 10, 'bold'))
         self.ability_lbl.pack(padx=5, pady=5)
 
+        self.game = StringVar()
+        self.game_chosen = ttk.Combobox(self.profile_frame,width=27,textvariable=self.game)
+        self.game_chosen['values'] = ['red-blue', 'yellow', 'gold-silver',
+                                 'crystal', 'ruby-sapphire', 'emerald',
+                                 'diamond-pearl', 'platinum', 'heart-gold-soul-silver',
+                                 'black-white', 'black-2-white-2', 'x-y', 'omega-ruby-alpha-sapphire'
+                                 'sun-moon', 'ultra-sun-ultra-moon','sword-shield']
+
+        self.game_chosen.current(3)
+        self.game_chosen.pack(padx=5,pady=5)
         self.moves_btn = Button(self.profile_frame, text="MOVES", font=("Arial", 10, 'bold'), command=self.moves)
         self.moves_btn.pack(padx=5, pady=5)
 
 
         #Pokemon Stats Screen
         self.stats_frame = Frame(self.root, bg="#F3F1F1", bd=3, relief=RIDGE)
-        self.stats_frame.place(x=550,y=100,width=600,height=450)
+        self.stats_frame.place(x=550,y=100,width=600,height=480)
         self.frame2_header = Label(self.stats_frame, text="Pokemon Stats", bg="#F3F1F1", fg="black", font=("Arial", 10, 'bold'))
         self.frame2_header.pack(padx=10, pady=10)
         stats = np.array(self.pokemon.base_stats)
@@ -78,4 +88,4 @@ class details:
 
     def moves(self):
         top = Toplevel()
-        obj = moves(top,self.pokemon)
+        obj = moves(top,self.pokemon,self.game.get())
